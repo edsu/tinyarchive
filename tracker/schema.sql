@@ -1,5 +1,5 @@
 CREATE TABLE service (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     finished_tasks_count INTEGER NOT NULL DEFAULT 0
 );
@@ -20,5 +20,5 @@ CREATE TABLE statistics (
     username TEXT NOT NULL,
     service_id INTEGER NOT NULL REFERENCES service(id),
     count INTEGER NOT NULL DEFAULT 0,
-    PRIMARY KEY (username, service_id) ON CONFLICT IGNORE
+    PRIMARY KEY (username, service_id)
 );

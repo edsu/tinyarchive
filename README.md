@@ -67,3 +67,16 @@ File with some helper functions to create new tasks at the tracker.
 ### twitter\_spritzer\_import.py
 Untested and unfinished tool to import the unrolled URLS from the Twitter
 spritzer provided by swebb.
+
+# Install
+
+Here's what you will need to do to get tinyarchive running on Ubuntu.
+
+1. apt-get install git python postgresql python-psycopg2 python-webpy
+1. sudo -u postgres createdb --owner $USER tinyarchive
+1. cat tracker/schema.sql | psql tinyarchive
+1. cp tracker/config.py.template tracker/config.py
+1. edit tracker/config.py with database credentials
+1. run tracker/tracker.py
+1. point your browser at http://localhost:8080/
+1. start up a [tinyback](http://github.com/archiveteam/tinyback) client pointed at your new tinyarchive tracker

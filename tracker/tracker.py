@@ -16,13 +16,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import json
 import os
 import re
-import tempfile
+import web
+import json
 import time
 import uuid
-import web
+import config
+import tempfile
 
 urls = (
     "/", "index",
@@ -33,7 +34,7 @@ urls = (
 app = web.application(urls, globals())
 
 directory = os.path.dirname(__file__)
-db = web.database(dbn="sqlite", db=os.path.join(directory, "tasks.sqlite"), pooling=False)
+db = web.database(dbn=config.dbn, db=config.db, pw=config.pw)
 data_directory = os.path.abspath(os.path.join(directory, "files"))
 
 class index:
@@ -95,7 +96,7 @@ class data:
                     username IN (
                         SELECT username FROM task WHERE username IS NOT NULL AND timestamp > $timestamp GROUP BY username ORDER BY COUNT(*) DESC LIMIT 10
                     )
-                GROUP BY username, service_id;
+                GROUP BY username, service, service_id;
             """, vars={"timestamp": int(time.time()) - 86400})
 
         users = {}
